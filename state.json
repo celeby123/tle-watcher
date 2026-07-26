@@ -1,30 +1,5 @@
 {
-  "units": {
-    "581": {
-      "digest": "373e8e08fe55",
-      "snippets": [
-        "#FFFFFF\",\"points\":\"809.37,423.4 809.37,425.38 815.92,425.38 815.92,320.7 771.39,320.7 771.39,423.4\",\"type\":\"Polygon\"},\"type\":\"Unit\",\"uid\":\"u581\",\"id\":\"1075581\"},{\"shape\":{\"fill\":\"#FFFFFF\",\"points\":\"788.16,196.37 788.16,300.66 863.34,300.66 863.34,196.37 859.37,196.37 859.37,179.6 82"
-      ],
-      "first_seen": "2026-07-26 09:08 AM CDT",
-      "last_seen": "2026-07-26 10:20 AM CDT"
-    },
-    "601": {
-      "digest": "5c2a7f29cd46",
-      "snippets": [
-        "658.04,911.55 696.21,911.55 696.21,927.55 732.03,927.55 732.03,911.55 769.66,911.55 769.66,806.49\",\"type\":\"Polygon\"},\"type\":\"Unit\",\"uid\":\"u601\",\"id\":\"1075561\"},{\"shape\":{\"fill\":\"#FFFFFF\",\"points\":\"771.44,682.72 658.04,682.72 658.04,788.85 771.44,788.85 771.44,686.39\",\"type\":\"Polygo"
-      ],
-      "first_seen": "2026-07-26 09:08 AM CDT",
-      "last_seen": "2026-07-26 10:20 AM CDT"
-    },
-    "535": {
-      "digest": "63e40cb8daab",
-      "snippets": [
-        "{\"errorsWhileComputingFlags\":false,\"flags\":{},\"requestId\":\"e535ba76-fba2-40e2-9a54-02aba8da2a9f\",\"evaluatedAt\":1785079170409,\"autocaptureExceptions\":true,\"hasFeatureFlags\":false,\"errorTracking\":{\"autocap"
-      ],
-      "first_seen": "2026-07-26 10:20 AM CDT",
-      "last_seen": "2026-07-26 10:20 AM CDT"
-    }
-  },
-  "last_run": "2026-07-26 10:20 AM CDT",
-  "degraded": true
+  "units": {},
+  "last_run": "2026-07-26 11:01 AM CDT",
+  "degraded": false
 }
