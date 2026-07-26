@@ -45,8 +45,6 @@
   "notify_on_disappear": true,
   "email": {
     "from": "Unit Watch <alerts@zulimworkouts.it.com>",
-    "to": [
-      "REPLACE_WITH_YOUR_EMAIL"
-    ]
+    "to": ["celeby@critexas.com", "zulim@critexas.com"]
   }
 }
