@@ -1,0 +1,67 @@
+name: Two Lakes Edge unit watch
+
+on:
+  schedule:
+    # Every 15 minutes. GitHub often delays scheduled runs a few minutes
+    # under load — asking for 15 typically gets you every 15-25 min.
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "normal | seed | test-email | debug"
+        required: false
+        default: "normal"
+
+concurrency:
+  group: tle-watch
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  watch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
+
+      - name: Run watcher
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: |
+          MODE="${{ github.event.inputs.mode }}"
+          case "$MODE" in
+            seed)       python watch.py --seed ;;
+            test-email) python watch.py --test-email ;;
+            debug)      python watch.py --debug ;;
+            *)          python watch.py ;;
+          esac
+
+      - name: Upload debug output
+        if: github.event.inputs.mode == 'debug'
+        uses: actions/upload-artifact@v4
+        with:
+          name: scraped-text
+          path: debug/
+          if-no-files-found: ignore
+
+      - name: Commit state
+        if: github.event.inputs.mode != 'debug' && github.event.inputs.mode != 'test-email'
+        run: |
+          git config user.name  "unit-watcher"
+          git config user.email "actions@users.noreply.github.com"
+          git add state.json
+          git diff --staged --quiet || git commit -m "state: $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push
