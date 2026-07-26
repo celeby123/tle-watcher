@@ -1,0 +1,23 @@
+{
+  "units": {
+    "581": {
+      "digest": "a3dda6a7c841",
+      "snippets": [
+        "{\"errorsWhileComputingFlags\":false,\"flags\":{},\"requestId\":\"7537ad77-ab4c-4b93-9d23-c581d3da1e1c\",\"evaluatedAt\":1785074822349,\"conversations\":false,\"errorTracking\":{\"autocaptureExceptions\":true,\"suppressionRules\":[]},\"surveys\":f",
+        "#FFFFFF\",\"points\":\"809.37,423.4 809.37,425.38 815.92,425.38 815.92,320.7 771.39,320.7 771.39,423.4\",\"type\":\"Polygon\"},\"type\":\"Unit\",\"uid\":\"u581\",\"id\":\"1075581\"},{\"shape\":{\"fill\":\"#FFFFFF\",\"points\":\"788.16,196.37 788.16,300.66 863.34,300.66 863.34,196.37 859.37,196.37 859.37,179.6 82"
+      ],
+      "first_seen": "2026-07-26 09:08 AM CDT",
+      "last_seen": "2026-07-26 09:08 AM CDT"
+    },
+    "601": {
+      "digest": "5c2a7f29cd46",
+      "snippets": [
+        "658.04,911.55 696.21,911.55 696.21,927.55 732.03,927.55 732.03,911.55 769.66,911.55 769.66,806.49\",\"type\":\"Polygon\"},\"type\":\"Unit\",\"uid\":\"u601\",\"id\":\"1075561\"},{\"shape\":{\"fill\":\"#FFFFFF\",\"points\":\"771.44,682.72 658.04,682.72 658.04,788.85 771.44,788.85 771.44,686.39\",\"type\":\"Polygo"
+      ],
+      "first_seen": "2026-07-26 09:08 AM CDT",
+      "last_seen": "2026-07-26 09:08 AM CDT"
+    }
+  },
+  "last_run": "2026-07-26 09:08 AM CDT",
+  "degraded": true
+}
