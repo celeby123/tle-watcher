@@ -1,9 +1,8 @@
 {
   "property_name": "Two Lakes Edge",
-  "urls": [
-    "https://twolakesedge.com/residences/?tab=sitemap",
-    "https://twolakesedge.com/residences/"
-  ],
+  "site_url": "https://twolakesedge.com/residences/?tab=sitemap",
+  "sightmap_api": "https://sightmap.com/app/api/v1/1ywymd4gwq0/sightmaps/109010",
+  "timezone": "America/Chicago",
   "tiers": {
     "TOP PICK": [
       "381",
@@ -42,54 +41,12 @@
       "835"
     ]
   },
-  "unit_regex": "(?<![\\d,.$])0?{unit}(?![\\d,.]|\\s*(?:sq\\.?\\s*ft|sf\\b|square|ft))",
-  "scan_html": false,
-  "settle_ms": 6000,
-  "click_selectors": [
-    "button:has-text('View Units')",
-    "button:has-text('Availability')",
-    "a:has-text('View Units')",
-    "button:has-text('Show')",
-    "[role='tab']"
-  ],
+  "required_floors": null,
   "notify_on_disappear": true,
   "email": {
     "from": "Unit Watch <alerts@zulimworkouts.it.com>",
     "to": [
       "REPLACE_WITH_YOUR_EMAIL"
     ]
-  },
-  "floor_cycle": {
-    "enabled": true,
-    "floors": [
-      1,
-      2,
-      3,
-      4,
-      5,
-      6,
-      7,
-      8
-    ],
-    "candidate_selectors": [
-      "[role='tab']",
-      "button",
-      "a",
-      "li",
-      "text",
-      "tspan",
-      "[class*='floor']",
-      "[class*='level']",
-      "[data-floor]",
-      "[data-level]"
-    ],
-    "label_patterns": [
-      "^0?{n}$",
-      "^(?:floor|level|fl\\.?|lvl\\.?|l)\\s*0?{n}$",
-      "^0?{n}(?:st|nd|rd|th)\\s*floor$",
-      "^floor\\s*0?{n}\\b"
-    ],
-    "pause_ms": 1600
-  },
-  "required_floors": null
+  }
 }

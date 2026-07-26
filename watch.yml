@@ -2,8 +2,8 @@ name: Two Lakes Edge unit watch
 
 on:
   schedule:
-    # Every 15 minutes. GitHub often delays scheduled runs a few minutes
-    # under load — asking for 15 typically gets you every 15-25 min.
+    # Every 15 minutes. See "Cost" in the README before changing this —
+    # on a private repo each run bills a full minute of Actions time.
     - cron: "*/15 * * * *"
   workflow_dispatch:
     inputs:
@@ -22,7 +22,7 @@ permissions:
 jobs:
   watch:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 5
 
     steps:
       - uses: actions/checkout@v4
@@ -33,9 +33,7 @@ jobs:
           cache: pip
 
       - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          python -m playwright install --with-deps chromium
+        run: pip install -r requirements.txt
 
       - name: Run watcher
         env:
@@ -53,7 +51,7 @@ jobs:
         if: github.event.inputs.mode == 'debug'
         uses: actions/upload-artifact@v4
         with:
-          name: scraped-text
+          name: sightmap-payload
           path: debug/
           if-no-files-found: ignore
 
