@@ -17,6 +17,7 @@ import html
 import json
 import os
 import sys
+import time
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -58,7 +59,11 @@ class FetchError(Exception):
 
 
 def fetch(debug=False):
-    """Return (units_by_number, floor_labels, problems)."""
+    """Return (units_by_number, floor_labels, problems).
+
+    Retries transient failures (timeouts, 5xx, rate limiting) before giving
+    up. A single slow response is not an outage and should not alarm anyone.
+    """
     url = CONFIG["sightmap_api"]
     headers = {
         "Accept": "application/json",
@@ -67,13 +72,30 @@ def fetch(debug=False):
                        "AppleWebKit/537.36 (KHTML, like Gecko) "
                        "Chrome/126.0.0.0 Safari/537.36"),
     }
-    try:
-        r = requests.get(url, headers=headers, timeout=30)
-    except Exception as e:
-        raise FetchError(f"request failed: {type(e).__name__}: {e}")
+    attempts = CONFIG.get("retry_attempts", 3)
+    backoff = CONFIG.get("retry_backoff_seconds", [5, 20])
+    last = None
 
-    if r.status_code != 200:
-        raise FetchError(f"HTTP {r.status_code} from availability API")
+    for i in range(1, attempts + 1):
+        try:
+            r = requests.get(url, headers=headers, timeout=(10, 45))
+            if r.status_code == 200:
+                break
+            last = f"HTTP {r.status_code} from availability API"
+            transient = r.status_code in (408, 429, 500, 502, 503, 504)
+        except Exception as e:
+            last = f"{type(e).__name__}: {e}"
+            transient = True
+
+        if not transient:
+            raise FetchError(last)
+        if i < attempts:
+            pause = backoff[min(i - 1, len(backoff) - 1)]
+            print(f"  attempt {i}/{attempts} failed ({last}) — retrying in {pause}s")
+            time.sleep(pause)
+        else:
+            raise FetchError(f"{attempts} attempts failed — last: {last}")
+
     try:
         data = r.json()["data"]
     except Exception as e:
