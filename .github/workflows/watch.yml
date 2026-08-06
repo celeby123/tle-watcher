@@ -2,9 +2,9 @@ name: Two Lakes Edge unit watch
 
 on:
   schedule:
-    # Every 15 minutes. See "Cost" in the README before changing this —
-    # on a private repo each run bills a full minute of Actions time.
-    - cron: "*/15 * * * *"
+    # Backup only. The real cadence comes from the external cron-job.org
+    # ping, because GitHub heavily delays scheduled runs.
+    - cron: "0 * * * *"
   workflow_dispatch:
     inputs:
       mode:
@@ -12,9 +12,9 @@ on:
         required: false
         default: "normal"
 
-concurrency:
-  group: tle-watch
-  cancel-in-progress: false
+# NOTE: deliberately no `concurrency:` block. Runs arrive every 10 minutes
+# and GitHub's queue can be slow, so they overlap. Cancelling the queued one
+# just produces red X's. The commit step below is safe under concurrency.
 
 permissions:
   contents: write
@@ -22,7 +22,7 @@ permissions:
 jobs:
   watch:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v4
@@ -55,11 +55,29 @@ jobs:
           path: debug/
           if-no-files-found: ignore
 
+      # Bookkeeping must never fail the run. If this step can't push, the
+      # unit check still happened and any alert was already emailed.
       - name: Commit state
         if: github.event.inputs.mode != 'debug' && github.event.inputs.mode != 'test-email'
+        continue-on-error: true
         run: |
+          [ -f state.json ] || exit 0
           git config user.name  "unit-watcher"
           git config user.email "actions@users.noreply.github.com"
-          git add state.json
-          git diff --staged --quiet || git commit -m "state: $(date -u +%Y-%m-%dT%H:%MZ)"
-          git push
+          cp state.json /tmp/state.json
+          for i in 1 2 3 4 5; do
+            git fetch -q origin main
+            git reset -q --hard origin/main
+            cp /tmp/state.json state.json
+            git add state.json
+            if git diff --staged --quiet; then
+              echo "state unchanged"; exit 0
+            fi
+            git commit -qm "state: $(date -u +%Y-%m-%dT%H:%MZ)"
+            if git push -q origin main 2>/dev/null; then
+              echo "state pushed (attempt $i)"; exit 0
+            fi
+            echo "push attempt $i lost the race, retrying"
+            sleep $((i * 3))
+          done
+          echo "could not push state after 5 attempts — check still ran fine"
