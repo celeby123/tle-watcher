@@ -1,16 +1,16 @@
 {
   "units": {
     "435": {
-      "price": 2973,
+      "price": 2982,
       "available_on": "2027-01-17",
-      "display_price": "$2,973.00",
+      "display_price": "$2,982.00",
       "display_available_on": "Available Jan 17th",
       "floor": "Floor 4",
       "plan": "B3",
       "first_seen": "2026-10-08 08:10 AM CDT",
-      "last_seen": "2026-10-13 06:40 PM CDT"
+      "last_seen": "2026-10-13 06:50 PM CDT"
     }
   },
-  "last_run": "2026-10-13 06:40 PM CDT",
+  "last_run": "2026-10-13 06:50 PM CDT",
   "degraded": false
 }
