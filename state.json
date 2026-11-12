@@ -1,16 +1,16 @@
 {
   "units": {
     "331": {
-      "price": 2984,
+      "price": 2934,
       "available_on": "2026-12-24",
-      "display_price": "$2,984.00",
+      "display_price": "$2,934.00",
       "display_available_on": "Available Dec 24th",
       "floor": "Floor 3",
       "plan": "B3",
       "first_seen": "2026-11-04 07:30 AM CST",
-      "last_seen": "2026-11-11 08:40 PM CST"
+      "last_seen": "2026-11-11 08:50 PM CST"
     }
   },
-  "last_run": "2026-11-11 08:40 PM CST",
+  "last_run": "2026-11-11 08:50 PM CST",
   "degraded": false
 }
